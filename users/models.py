@@ -22,9 +22,6 @@ class User(AbstractUser, TimeStampAbstractModel):
     This class defines the basic user model for the application.
     """
 
-    email = models.EmailField(_("Email Address"), unique=True, null=True, blank=True)
-    """email: email field for the user. It must be unique."""
-
     username = models.CharField(
         _("username"), max_length=150, null=True, blank=True, unique=True
     )
@@ -33,7 +30,7 @@ class User(AbstractUser, TimeStampAbstractModel):
     first_name = None  # type: ignore
     last_name = None  # type: ignore
 
-    USERNAME_FIELD = "email"
+    USERNAME_FIELD = "username"
     """Field that will be used as unique identifier for the user."""
 
     REQUIRED_FIELDS = []
@@ -49,4 +46,4 @@ class User(AbstractUser, TimeStampAbstractModel):
         Returns:
             str: The string representation of the user.
         """
-        return self.email
+        return self.username

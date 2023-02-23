@@ -26,7 +26,7 @@ class UserRegistrationView(generics.CreateAPIView):
 
     @extend_schema(
         operation_id="User Registration API",
-        description="Creates user with given email and password",
+        description="Creates user with given username and password",
         request=UserRegisterationSerializer,
         responses=inline_serializer(
             "sucess_registration_response",
@@ -69,7 +69,7 @@ class UserLoginView(APIView):
             Takes a set of user credentials and returns an access
             and refresh JSON web token pair to prove the authentication
             of those credentials. Set of user credentials might must be
-            combination of email and password
+            combination of username and password
         """,
         request=TokenObtainPairSerializer,
         responses={

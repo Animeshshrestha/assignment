@@ -78,6 +78,10 @@ WSGI_APPLICATION = "assignment_tasks.wsgi.application"
 
 AUTH_USER_MODEL = "users.User"
 
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+]
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

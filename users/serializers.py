@@ -15,26 +15,23 @@ class UserRegisterationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            "email",
+            "username",
             "password",
             "confirm_password",
         ]
         extra_kwargs = {"password": {"write_only": True}}
 
-    def validate_email(self, value):
-        return value.lower()
-
     def validate(self, data):
-        email = data["email"]
+        user_name = data["username"]
         password = data.get("password")
         confirm_password = data.get("confirm_password")
         mesg = "This email has been already registered."
-        if User.objects.filter(email=email).exists():
+        if User.objects.filter(username=user_name).exists():
             raise serializers.ValidationError({"error": mesg})
         if password != confirm_password:
             raise serializers.ValidationError({"error": "Passwords don't match."})
         if password:
-            user = User(email=email)
+            user = User(username=user_name)
             try:
                 validate_password(password=password, user=user)
             except Exception as e:
@@ -51,7 +48,7 @@ class UserRegisterationSerializer(serializers.ModelSerializer):
 
 
 class TokenObtainPairSerializer(serializers.Serializer):
-    email = serializers.CharField(label=_("Email/Mobile"), required=True)
+    username = serializers.CharField(label=_("User Name"), required=True)
     password = serializers.CharField(
         label=_("Password"),
         style={"input_type": "password"},
@@ -61,12 +58,11 @@ class TokenObtainPairSerializer(serializers.Serializer):
     )
 
     def validate(self, attrs):
-        email = attrs.get("email", None)
+        user_name = attrs.get("username", None)
         password = attrs.get("password")
 
-        email = email.lower()
         user = authenticate(
-            request=self.context.get("request"), email=email, password=password
+            request=self.context.get("request"), username=user_name, password=password
         )
         if not user:
             msg = {"error": "Unable to log in with provided credentials."}
