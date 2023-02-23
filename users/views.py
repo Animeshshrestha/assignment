@@ -1,10 +1,8 @@
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.debug import sensitive_post_parameters
-from drf_spectacular.utils import (extend_schema, extend_schema_view,
-                                   inline_serializer)
+from drf_spectacular.utils import extend_schema, inline_serializer
 from rest_framework import generics, serializers, status
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -53,8 +51,9 @@ class UserRegistrationView(generics.CreateAPIView):
 
 class UserLoginView(APIView):
     """
-    Takes a set of user credentials and returns an access and refresh JSON web
-    token pair to prove the authentication of those credentials and email_verified status.
+    Takes a set of user credentials and returns an access and
+    refresh JSON web token pair to prove the authentication
+    of those credentials and email_verified status.
     """
 
     serializer_class = TokenObtainPairSerializer
@@ -67,9 +66,10 @@ class UserLoginView(APIView):
     @extend_schema(
         operation_id="User Login API",
         description="""
-            Takes a set of user credentials and returns an access and refresh JSON web
-            token pair to prove the authentication of those credentials.
-            Set of user credentials might must be combination of email and password
+            Takes a set of user credentials and returns an access
+            and refresh JSON web token pair to prove the authentication
+            of those credentials. Set of user credentials might must be
+            combination of email and password
         """,
         request=TokenObtainPairSerializer,
         responses={
