@@ -1,0 +1,6 @@
+Hello from {{ site_name }} Team,
+
+This is the example of sending email from django to any emails.
+
+Best Regards
+{{ site_name }} Team
